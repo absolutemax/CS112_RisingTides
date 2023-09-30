@@ -48,7 +48,7 @@ public class RisingTides {
                 }
             }
         }
-
+    
         return lowestAndHighest;
     }
 
@@ -70,9 +70,6 @@ public class RisingTides {
         ArrayList<GridLocation> queue = new ArrayList<GridLocation>();
 
         for(int i = 0; i <= sources.length; i++) {
-        
-            
-            
             GridLocation source = sources[i];
             queue.add(source);
             resultingArray[source.row][source.col] = true;
