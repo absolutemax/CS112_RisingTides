@@ -65,43 +65,42 @@ public class RisingTides {
      * @return boolean[][], where flooded cells are true, otherwise false
      */
     public boolean[][] floodedRegionsIn(double height) {
-       
         boolean[][] resultingArray = new boolean[terrain.length][terrain[0].length];
         ArrayList<GridLocation> queue = new ArrayList<GridLocation>();
 
-        for(int i = 0; i < sources.length; i++) {
-            GridLocation source = sources[i];
+        for(GridLocation source : sources) {
             queue.add(source);
             resultingArray[source.row][source.col] = true;
         }
+        
         while(queue.size() > 0) {
             GridLocation source = queue.remove(0);
             
             // top coordinate
             int topNeighborRow = source.row - 1;
             int topNeighborCol = source.col;
-            if(source.row > 0 && resultingArray[topNeighborRow][topNeighborCol] == false && terrain[topNeighborRow][topNeighborCol] <= terrain[source.row][source.col]) {
+            if(source.row > 0 && resultingArray[topNeighborRow][topNeighborCol] == false && terrain[topNeighborRow][topNeighborCol] <= height) {
                 queue.add(new GridLocation(topNeighborRow, topNeighborCol));
                 resultingArray[topNeighborRow][topNeighborCol] = true;
             }
             // bottom coordinate
             int bottomNeighborRow = source.row + 1;
             int bottomNeighborCol = source.col;
-            if(source.row < resultingArray.length - 1 && resultingArray[bottomNeighborRow][bottomNeighborCol] == false && terrain[bottomNeighborRow][bottomNeighborCol] <= terrain[source.row][source.col]) {
+            if(source.row < resultingArray.length - 1 && resultingArray[bottomNeighborRow][bottomNeighborCol] == false && terrain[bottomNeighborRow][bottomNeighborCol] <= height) {
                 queue.add(new GridLocation(bottomNeighborRow, bottomNeighborCol));
                 resultingArray[bottomNeighborRow][bottomNeighborCol] = true;
             }
             // left coordinate
             int leftNeighborRow = source.row;
             int leftNeighborCol = source.col - 1;
-            if(source.col > 0 && resultingArray[leftNeighborRow][leftNeighborCol] == false && terrain[leftNeighborRow][leftNeighborCol] <= terrain[source.row][source.col]) {
+            if(source.col > 0 && resultingArray[leftNeighborRow][leftNeighborCol] == false && terrain[leftNeighborRow][leftNeighborCol] <= height) {
                 queue.add(new GridLocation(leftNeighborRow, leftNeighborCol));
                 resultingArray[leftNeighborRow][leftNeighborCol] = true;
             }
             // right coordinate
             int rightNeighborRow = source.row;
             int rightNeighborCol = source.col + 1;
-            if(source.col < resultingArray[0].length - 1 && resultingArray[rightNeighborRow][rightNeighborCol] == false && terrain[rightNeighborRow][rightNeighborCol] <= terrain[source.row][source.col]) {
+            if(source.col < resultingArray[0].length - 1 && resultingArray[rightNeighborRow][rightNeighborCol] == false && terrain[rightNeighborRow][rightNeighborCol] <= height) {
                 queue.add(new GridLocation(rightNeighborRow, rightNeighborCol));
                 resultingArray[rightNeighborRow][rightNeighborCol] = true;
             }
