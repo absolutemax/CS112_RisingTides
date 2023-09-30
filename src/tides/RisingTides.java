@@ -69,45 +69,45 @@ public class RisingTides {
         boolean[][] resultingArray = new boolean[terrain.length][terrain[0].length];
         ArrayList<GridLocation> queue = new ArrayList<GridLocation>();
 
-        for(int i = 0; i <= sources.length; i++) {
+        for(int i = 0; i < sources.length; i++) {
             GridLocation source = sources[i];
             queue.add(source);
             resultingArray[source.row][source.col] = true;
         }
         while(queue.size() > 0) {
             GridLocation source = queue.remove(0);
-
-            // need to check if on edge
-            // remember which `height` to use
-            // only add coordinate if isn't already flooded
             
             // top coordinate
-            if(source.row != 0 && resultingArray[source.row - 1][source.col] == false && terrain[source.row - 1][source.col] <= terrain[source.row][source.col]) {
-
+            int topNeighborRow = source.row - 1;
+            int topNeighborCol = source.col;
+            if(source.row > 0 && resultingArray[topNeighborRow][topNeighborCol] == false && terrain[topNeighborRow][topNeighborCol] <= terrain[source.row][source.col]) {
+                queue.add(new GridLocation(topNeighborRow, topNeighborCol));
+                resultingArray[topNeighborRow][topNeighborCol] = true;
             }
             // bottom coordinate
-            if(source.row != resultingArray.length && resultingArray[source.row + 1][source.col] == false && terrain[source.row + 1][source.col] <= terrain[source.row][source.col]) {
-                
+            int bottomNeighborRow = source.row + 1;
+            int bottomNeighborCol = source.col;
+            if(source.row < resultingArray.length - 1 && resultingArray[bottomNeighborRow][bottomNeighborCol] == false && terrain[bottomNeighborRow][bottomNeighborCol] <= terrain[source.row][source.col]) {
+                queue.add(new GridLocation(bottomNeighborRow, bottomNeighborCol));
+                resultingArray[bottomNeighborRow][bottomNeighborCol] = true;
             }
             // left coordinate
-            if(source.col != 0 && resultingArray[source.row][source.col - 1] == false && terrain[source.row][source.col - 1] <= terrain[source.row][source.col]) {
-                
+            int leftNeighborRow = source.row;
+            int leftNeighborCol = source.col - 1;
+            if(source.col > 0 && resultingArray[leftNeighborRow][leftNeighborCol] == false && terrain[leftNeighborRow][leftNeighborCol] <= terrain[source.row][source.col]) {
+                queue.add(new GridLocation(leftNeighborRow, leftNeighborCol));
+                resultingArray[leftNeighborRow][leftNeighborCol] = true;
             }
             // right coordinate
-            if(source.col != resultingArray[0].length && resultingArray[source.row][source.col + 1] == false && terrain[source.row][source.col + 1] <= terrain[source.row][source.col]) {
-                
+            int rightNeighborRow = source.row;
+            int rightNeighborCol = source.col + 1;
+            if(source.col < resultingArray[0].length - 1 && resultingArray[rightNeighborRow][rightNeighborCol] == false && terrain[rightNeighborRow][rightNeighborCol] <= terrain[source.row][source.col]) {
+                queue.add(new GridLocation(rightNeighborRow, rightNeighborCol));
+                resultingArray[rightNeighborRow][rightNeighborCol] = true;
             }
         }
 
         return resultingArray;
-
-        
-        /*
-Remove the first element from the ArrayList and check all of its neighbors in each of the four cardinal directions.
-If any of the neighbors’ height is less than or equal to the provided height parameter, flood the neighbor and add it to the end of the ArrayList. (Note: There may be cases where all 4 neighbors are flooded.)
-Return the resulting array .
-
-        */
     }
 
     /**
